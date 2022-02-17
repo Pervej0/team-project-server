@@ -48,11 +48,11 @@ const run = async () => {
       } else {
         post = await cursor.toArray();
       }
-
       res.json({
         post,
         count,
       });
+      console.log(first);
     });
 
     // chats inserting
