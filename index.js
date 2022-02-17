@@ -35,32 +35,30 @@ const run = async () => {
     });
 
     app.get("/post", async (req, res) => {
-
-      const cursor = bloodReq_postCollection.find({}).sort({ _id: -1 })
-      const page = req.query.page
-      const size = parseInt(req.query.size)
+      const cursor = bloodReq_postCollection.find({}).sort({ _id: -1 });
+      const page = req.query.page;
+      const size = parseInt(req.query.size);
       let post;
-      const count = await cursor.count()
+      const count = await cursor.count();
       if (page) {
-        post = await cursor.skip(page * size).limit(size).toArray()
-      }
-      else {
-
-        post = await cursor.toArray()
+        post = await cursor
+          .skip(page * size)
+          .limit(size)
+          .toArray();
+      } else {
+        post = await cursor.toArray();
       }
 
       res.json({
         post,
-        count
-      })
-
-
+        count,
+      });
     });
 
     // chats inserting
     app.post("/chat", async (req, res) => {
       const data = req.body;
-      console.log(data);
+
       const query = await chatCollection.insertOne(data);
     });
 
@@ -94,7 +92,6 @@ io.on("connection", (socket) => {
 
   socket.on("join_room", (data) => {
     socket.join(data);
-    // console.log(`${socket.id} room is ${data}`);
   });
 
   socket.on("send_message", (data) => {
