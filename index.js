@@ -35,8 +35,26 @@ const run = async () => {
     });
 
     app.get("/post", async (req, res) => {
-      const query = await bloodReq_postCollection.find({}).toArray();
-      res.send(query);
+
+      const cursor = bloodReq_postCollection.find({}).sort({ _id: -1 })
+      const page = req.query.page
+      const size = parseInt(req.query.size)
+      let post;
+      const count = await cursor.count()
+      if (page) {
+        post = await cursor.skip(page * size).limit(size).toArray()
+      }
+      else {
+
+        post = await cursor.toArray()
+      }
+
+      res.json({
+        post,
+        count
+      })
+
+
     });
 
     // chats inserting
