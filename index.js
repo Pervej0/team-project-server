@@ -12,7 +12,6 @@ app.use(cors());
 app.use(express.json());
 
 const server = http.createServer(app);
-const messageData = "";
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.sjbgh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
@@ -42,8 +41,17 @@ const run = async () => {
 
     // chats inserting
     app.post("/chat", async (req, res) => {
-      console.log(req.body);
-      // const query = await chatCollection.insertOne(data);
+      const data = req.body;
+      console.log(data);
+      const query = await chatCollection.insertOne(data);
+    });
+
+    // getting specific message by email
+    app.get("/chat/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = { room: email };
+      const messages = await chatCollection.find(query).toArray();
+      res.json(messages);
     });
   } finally {
     // await client.close();
