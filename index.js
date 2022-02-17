@@ -52,7 +52,6 @@ const run = async () => {
         post,
         count,
       });
-      console.log(first);
     });
 
     // chats inserting
