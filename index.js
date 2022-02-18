@@ -131,7 +131,7 @@ app.get("/", (req, res) => {
 // socket io for chat
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://gifted-lamport-e30a5d.netlify.app/",
     methods: ["GET", "POST"],
   },
 });
