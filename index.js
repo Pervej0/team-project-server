@@ -72,20 +72,19 @@ const run = async () => {
       res.json(messages);
     });
 
-        //POST API FOR Review
-        app.post("/review", async (req, res) => {
-          const place = req.body;
-          const result = await reviewCollection.insertOne(place);
-          res.json(result);
-          // console.log(`A document was inserted with the _id: ${result.insertedId}`);
-        });
-            //GET API for Review
+    //POST API FOR Review
+    app.post("/review", async (req, res) => {
+      const place = req.body;
+      const result = await reviewCollection.insertOne(place);
+      res.json(result);
+      // console.log(`A document was inserted with the _id: ${result.insertedId}`);
+    });
+    //GET API for Review
     app.get("/review", async (req, res) => {
       const cursor = reviewCollection.find({});
       const result = await cursor.toArray();
       res.json(result);
     });
-
 
     //DELETE API USING OBJECT ID
     app.delete("/post/:id", async (req, res) => {
@@ -112,7 +111,11 @@ const run = async () => {
       const updateDoc = {
         $set: { status: updateStatus },
       };
-      const result = await bloodReq_postCollection.updateOne(filter, updateDoc, options);
+      const result = await bloodReq_postCollection.updateOne(
+        filter,
+        updateDoc,
+        options
+      );
       res.send(result);
     });
   } finally {
